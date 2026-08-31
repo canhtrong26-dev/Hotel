@@ -48,6 +48,19 @@ export const createHotel = createAsyncThunk(
   }
 )
 
+export const updateHotel = createAsyncThunk(
+  'hotels/update',
+  async ({ id, data }: { id: string, data: Omit<Hotel, 'id'> }) => {
+    const response = await fetch(`https://6a9302ce25936d5660f089a1.mockapi.io/hotels/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    const result = await response.json()
+    return result
+  }
+)
+
 const hotelSlice = createSlice({
   name: 'hotels',
   initialState,
