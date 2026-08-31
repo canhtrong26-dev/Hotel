@@ -94,6 +94,12 @@ const hotelSlice = createSlice({
       .addCase(createHotel.fulfilled, (state, action) => {
         state.hotels.push(action.payload)
       })
+      .addCase(updateHotel.fulfilled, (state, action) => {
+        const index = state.hotels.findIndex(h => h.id === action.payload.id)
+        if (index !== -1) {
+          state.hotels[index] = action.payload
+        }
+      })
   }
 })
 
