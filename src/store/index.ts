@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import hotelReducer from './hotelSlice'
+import favoriteReducer from './favoriteSlice'
 
 export const store = configureStore({
   reducer: {
-    hotels: hotelReducer
+    hotels: hotelReducer,
+    favorites: favoriteReducer
   }
 })
 

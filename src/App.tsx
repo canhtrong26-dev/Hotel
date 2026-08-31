@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminHotelListPage from './pages/admin/AdminHotelListPage'
+import AdminLayout from './layouts/AdminLayout'
 import AdminHotelFormPage from './pages/admin/AdminHotelFormPage'
 
 function App() {
@@ -22,10 +23,12 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
       </Route>
 
-      <Route path="/admin" element={<AdminDashboardPage />} />
-      <Route path="/admin/hotels" element={<AdminHotelListPage />} />
-      <Route path="/admin/hotels/new" element={<AdminHotelFormPage />} />
-      <Route path="/admin/hotels/:id/edit" element={<AdminHotelFormPage />} />
+      <Route element={<AdminLayout />}>
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/hotels" element={<AdminHotelListPage />} />
+        <Route path="/admin/hotels/new" element={<AdminHotelFormPage />} />
+        <Route path="/admin/hotels/:id/edit" element={<AdminHotelFormPage />} />
+      </Route>
 
       <Route path="*" element={<NotFoundPage />} />
 

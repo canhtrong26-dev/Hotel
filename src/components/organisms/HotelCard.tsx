@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom'
-import type  { Hotel } from '../../types/hotel'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '../../store'
+import { addFavorite, removeFavorite } from '../../store/favoriteSlice'
+import type { Hotel } from '../../types/hotel'
 import Badge from '../atoms/Badge'
 import Button from '../atoms/Button'
 import PriceTag from '../atoms/PriceTag'
@@ -12,6 +15,18 @@ type HotelCardProps = {
 
 function HotelCard({ hotel }: HotelCardProps) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const favorites = useSelector((state: RootState) => state.favorites.favorites)
+  const isFavorite = favorites.some(h => h.id === hotel.id)
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFavorite(hotel.id))
+    } else {
+      dispatch(addFavorite(hotel))
+    }
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
@@ -26,7 +41,15 @@ function HotelCard({ hotel }: HotelCardProps) {
 
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-base font-semibold text-textcolor">{hotel.name}</h3>
-          <Badge status={hotel.status} />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleToggleFavorite}
+              className="text-xl hover:scale-110 transition-transform"
+            >
+              {isFavorite ? '❤️' : '🤍'}
+            </button>
+            <Badge status={hotel.status} />
+          </div>
         </div>
 
         <HotelLocation city={hotel.city} />
