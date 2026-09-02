@@ -61,6 +61,16 @@ export const updateHotel = createAsyncThunk(
   }
 )
 
+export const deleteHotel = createAsyncThunk(
+  'hotels/delete',
+  async (id: string) => {
+    await fetch(`https://6a9302ce25936d5660f089a1.mockapi.io/hotels/${id}`, {
+      method: 'DELETE'
+    })
+    return id
+  }
+)
+
 const hotelSlice = createSlice({
   name: 'hotels',
   initialState,
@@ -99,6 +109,9 @@ const hotelSlice = createSlice({
         if (index !== -1) {
           state.hotels[index] = action.payload
         }
+      })
+      .addCase(deleteHotel.fulfilled, (state, action) => {
+        state.hotels = state.hotels.filter(h => String(h.id) !== action.payload)
       })
   }
 })

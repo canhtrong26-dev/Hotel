@@ -24,6 +24,24 @@ function AdminHotelFormPage() {
     status: 'available' as 'available' | 'fully-booked'
   })
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const validate = () => {
+  const newErrors: Record<string, string> = {}
+
+  if (!form.name.trim()) newErrors.name = 'Vui lòng nhập tên khách sạn'
+  if (!form.image.trim()) newErrors.image = 'Vui lòng nhập URL ảnh'
+  if (!form.city.trim()) newErrors.city = 'Vui lòng nhập thành phố'
+  if (!form.address.trim()) newErrors.address = 'Vui lòng nhập địa chỉ'
+  if (form.price <= 0) newErrors.price = 'Giá phải lớn hơn 0'
+  if (form.rating < 1 || form.rating > 5) newErrors.rating = 'Số sao từ 1 đến 5'
+  if (form.rooms < 0) newErrors.rooms = 'Số phòng không được âm'
+
+  setErrors(newErrors)
+  return Object.keys(newErrors).length === 0
+}
+
+
   useEffect(() => {
     if (isEdit && hotelToEdit) {
       setForm({
@@ -68,24 +86,31 @@ function AdminHotelFormPage() {
 
         <input name="name" placeholder="Tên khách sạn" value={form.name}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
 
         <input name="image" placeholder="URL ảnh" value={form.image}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.image && <p className="text-red-500 text-xs">{errors.image}</p>}
 
         <input name="price" type="number" placeholder="Giá / đêm" value={form.price}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.price && <p className="text-red-500 text-xs">{errors.price}</p>}
 
         <input name="city" placeholder="Thành phố" value={form.city}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.city && <p className="text-red-500 text-xs">{errors.city}</p>}
 
         <input name="address" placeholder="Địa chỉ" value={form.address}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.address && <p className="text-red-500 text-xs">{errors.address}</p>}
 
         <input name="rating" type="number" placeholder="Số sao (1-5)" value={form.rating}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.rating && <p className="text-red-500 text-xs">{errors.rating}</p>}
 
         <input name="rooms" type="number" placeholder="Số phòng trống" value={form.rooms}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none" />
+        {errors.rooms && <p className="text-red-500 text-xs">{errors.rooms}</p>}
 
         <select name="status" value={form.status}
           onChange={handleChange} className="border border-gray-200 rounded px-4 py-2 text-sm outline-none">
