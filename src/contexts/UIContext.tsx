@@ -1,8 +1,10 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 type UIContextType = {
   isSidebarOpen: boolean
   toggleSidebar: () => void
+  isDarkMode: boolean
+  toggleDarkMode: () => void
 }
 
 const UIContext = createContext<UIContextType | null>(null)
@@ -10,12 +12,24 @@ const UIContext = createContext<UIContextType | null>(null)
 export function UIProvider({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(prev => !prev)
-  }
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem('darkMode') === 'true'
+  )
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    localStorage.setItem('darkMode', String(isDarkMode))
+  }, [isDarkMode])
+
+  const toggleSidebar = () => setIsSidebarOpen(prev => !prev)
+  const toggleDarkMode = () => setIsDarkMode(prev => !prev)
 
   return (
-    <UIContext.Provider value={{ isSidebarOpen, toggleSidebar }}>
+    <UIContext.Provider value={{ isSidebarOpen, toggleSidebar, isDarkMode, toggleDarkMode }}>
       {children}
     </UIContext.Provider>
   )

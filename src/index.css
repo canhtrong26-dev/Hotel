@@ -5,3 +5,5 @@
     --color-textcolor: #282828;
     --color-dark: #0D263B;
 }
+
+@variant dark (&:where(.dark, .dark *));

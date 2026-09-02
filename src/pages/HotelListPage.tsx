@@ -40,22 +40,23 @@ function HotelListPage() {
   if (loading) return <p className="text-center py-10">Đang tải...</p>
   if (error) return <p className="text-center py-10 text-red-500">{error}</p>
 
-  return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold text-textcolor">Danh sách khách sạn</h1>
-      <SearchBar value={search} onChange={setSearch} />
-      <FilterPanel
-        city={city}
-        maxPrice={maxPrice}
-        rating={rating}
-        onCityChange={setCity}
-        onMaxPriceChange={setMaxPrice}
-        onRatingChange={setRating}
-      />
-      <HotelGrid hotels={filteredHotels} />
-      {/*                ↑ đổi từ hotels sang filteredHotels */}
-    </div>
-  )
+ return (
+  <div className="flex flex-col gap-4 px-0 sm:px-2 lg:px-0">
+    <h1 className="text-xl sm:text-2xl font-bold text-textcolor">
+      Danh sách khách sạn
+    </h1>
+    <SearchBar value={search} onChange={setSearch} />
+    <FilterPanel
+      city={city}
+      maxPrice={maxPrice}
+      rating={rating}
+      onCityChange={setCity}
+      onMaxPriceChange={setMaxPrice}
+      onRatingChange={setRating}
+    />
+    <HotelGrid hotels={filteredHotels} />
+  </div>  
+)
 }
 
 export default HotelListPage
