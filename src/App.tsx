@@ -10,6 +10,7 @@ import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 import AdminHotelListPage from './pages/admin/AdminHotelListPage'
 import AdminLayout from './layouts/AdminLayout'
 import AdminHotelFormPage from './pages/admin/AdminHotelFormPage'
+import LoginPage from './pages/admin/LoginPage'
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/about" element={<AboutPage />} />
       </Route>
-
+      <Route path="/login" element={<LoginPage />} />
       <Route element={<AdminLayout />}>
         <Route path="/admin" element={<AdminDashboardPage />} />
         <Route path="/admin/hotels" element={<AdminHotelListPage />} />
